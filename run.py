@@ -6,6 +6,7 @@ Created on Sun Jul  8 02:04:00 2018
 """
 
 from flask import Flask, render_template, request
+from datetime import datetime
 import Dash_App1, Dash_App2
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ def expressions():
     var1 = "variable1"
     list1 = [1, 2, 3, 4]
     dict1 = {1: "1", 2: "2", 3: "3"}
-    dash_url = '/dash?secret={}'.format(create_secret('secret'))
+    dash_url = '/dash?secret={}'.format(create_secret(str(datetime.now()).split(':')[0]))
     return render_template('expression.html', var1=var1, list1=list1, dict1=dict1, dash_url=dash_url)
 
 @app.route('/user/<int:user_id>')
@@ -45,4 +46,4 @@ def statements():
     return render_template('statements.html', var1=var1, list1=list1)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

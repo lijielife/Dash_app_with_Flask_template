@@ -11,6 +11,7 @@ import dash_html_components as html
 import pandas as pd
 import string, random
 from flask_caching import Cache
+from datetime import datetime
 
 def Add_Dash(server):
     app = Dash(server=server, url_base_pathname='/dash')
@@ -21,25 +22,25 @@ def Add_Dash(server):
         'CACHE_DIR': 'cache-directory',
         'CACHE_THRESHOLD': 10  # should be equal to maximum number of active users
     })
-    
+       
     app.layout = html.Div([
         dcc.Location(id='url', refresh=False),
         html.Div(id='index')
     ])
     
     @cache.memoize()
-    def create_secret(secret):
+    def create_secret(key):
         return ''.join(random.choice(string.ascii_letters + string.digits) for x in range(100))
 
     @app.callback(
             Output('index', 'children'),
-            [Input('url', 'search')]     )
+            [Input('url', 'search')])
     def display_page(request_args):
         if request_args:
             rr = pd.Series(str(request_args)[1:].split('&')).str.split('=')
             key = rr.str.get(0)
             value = rr.str.slice(1,).str.join('=')   
-            if 'secret' in list(key) and value[key == 'secret'].iloc[0] == create_secret('secret'):
+            if 'secret' in list(key) and value[key == 'secret'].iloc[0] == create_secret(str(datetime.now()).split(':')[0]):
                 return  html.Div([
                             html.Div(id='target'),
                             dcc.Input(id='input', type='text', value='')
