@@ -1,0 +1,23 @@
+<h1> Expressions </h1>
+
+Variables: {{ var1 }}<br/>
+
+list: {{ list1[0] }}, {{ list1[1] }}, {{ list1[2] }}, {{ list1[3] }}<br/>
+
+dictionary: {{ dict1[1] }}, {{ dict1[2] }}, {{ dict1[3] }}<br/>
+
+computing: 2 + 3 = {{ 2+3 }}<br/>
+
+jinja filters:  {{ "capitalize" | capitalize }}<br/>
+
+to_hello: <a href={{ url_for("hello") }}>url for hello.html</a><br/>
+
+to_dash: <a href='/dash'> url to dash</a><br/>
+
+dash:<br/>
+
+<iframe frameborder='0' 
+        noresize='noresize' 
+        style='position: absolute; background: transparent; width: 100%; height:100%;' 
+        src={{ dash_url }}
+        frameborder="0"></iframe>
